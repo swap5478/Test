@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jurassic Universe | Cinematic Franchise Experience</title>
+
+  <!-- =========================
+       GOOGLE FONTS
+  ========================== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =====================================================
+       CSS VARIABLES
+    ===================================================== */
+    :root {
+      --bg: #05070d;
+      --bg-secondary: #0b1020;
+      --card: rgba(255,255,255,0.08);
+      --glass-border: rgba(255,255,255,0.15);
+      --text: #ffffff;
+      --muted: #c9d0e3;
+      --green: #00ff9f;
+      --green-soft: #0fd68d;
+      --red: #ff2c55;
+      --yellow: #ffd166;
+      --shadow: 0 0 25px rgba(0,255,159,0.35);
+      --blur: blur(18px);
+      --gradient: linear-gradient(135deg, rgba(0,255,159,0.2), rgba(255,44,85,0.18));
+      --radius: 24px;
+      --transition: 0.4s ease;
+      --max-width: 1400px;
+    }
+
+    /* =====================================================
+       GLOBAL STYLES
+    ===================================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #111827 0%, #05070d 50%, #020305 100%);
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(0,255,159,0.1), transparent 30%),
+        radial-gradient(circle at 80% 30%, rgba(255,44,85,0.12), transparent 35%),
+        radial-gradient(circle at 50% 80%, rgba(0,170,255,0.08), transparent 35%);
+      z-index: -2;
+    }
+
+    /* =====================================================
+       LOADING SCREEN
+    ===================================================== */
+    .loader {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 9999;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+
+    .loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-logo {
+      width: 180px;
+      height: 180px;
+      border: 4px solid rgba(255,255,255,0.15);
+      border-top: 4px solid var(--green);
+      border-radius: 50%;
+      animation: spin 1.5s linear infinite;
+      box-shadow: 0 0 40px rgba(0,255,159,0.5);
+      margin-bottom: 30px;
+    }
+
+    .loader h1 {
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 8px;
+      color: var(--green);
+      text-shadow: 0 0 25px rgba(0,255,159,0.8);
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* =====================================================
+       PARTICLES BACKGROUND
+    ===================================================== */
+    #particles {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(0,255,159,0.4);
+      animation: float linear infinite;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-120vh) scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* =====================================================
+       SPOTLIGHT EFFECT
+    ===================================================== */
+    .spotlight {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,255,159,0.12), transparent 70%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+      mix-blend-mode: screen;
+    }
+
+    /* =====================================================
+       NAVIGATION
+    ===================================================== */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 999;
+      padding: 18px 5%;
+      backdrop-filter: blur(18px);
+      background: rgba(0,0,0,0.35);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      color: var(--green);
+      font-weight: 900;
+      letter-spacing: 4px;
+      text-shadow: 0 0 15px rgba(0,255,159,0.7);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 600;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--green);
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0;
+      height: 2px;
+      background: var(--green);
+      transition: 0.3s ease;
+      box-shadow: 0 0 12px var(--green);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* =====================================================
+       HERO SECTION
+    ===================================================== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 100px 5%;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)),
+        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1920&auto=format&fit=crop') center/cover;
+      transform: scale(1.1);
+      animation: heroZoom 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes heroZoom {
+      from { transform: scale(1.1); }
+      to { transform: scale(1.2); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 1000px;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 10vw, 8rem);
+      font-family: 'Orbitron', sans-serif;
+      line-height: 1;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 10px;
+      color: #fff;
+      text-shadow:
+        0 0 10px rgba(255,255,255,0.8),
+        0 0 30px rgba(0,255,159,0.8),
+        0 0 60px rgba(255,44,85,0.5);
+      animation: pulseGlow 4s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%,100% {
+        text-shadow:
+          0 0 10px rgba(255,255,255,0.8),
+          0 0 30px rgba(0,255,159,0.8),
+          0 0 60px rgba(255,44,85,0.5);
+      }
+      50% {
+        text-shadow:
+          0 0 20px rgba(255,255,255,1),
+          0 0 60px rgba(0,255,159,1),
+          0 0 90px rgba(255,44,85,0.9);
+      }
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .glow-btn {
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 16px 34px;
+      border-radius: 100px;
+      font-size: 1rem;
+      color: white;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, rgba(0,255,159,0.2), rgba(255,44,85,0.2));
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+      transition: var(--transition);
+      box-shadow: 0 0 25px rgba(0,255,159,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glow-btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      transform: translateX(-100%);
+    }
+
+    .glow-btn:hover::before {
+      animation: shine 1s;
+    }
+
+    @keyframes shine {
+      to {
+        transform: translateX(100%);
+      }
+    }
+
+    .glow-btn:hover {
+      transform: translateY(-6px) scale(1.04);
+      box-shadow: 0 0 35px rgba(0,255,159,0.7);
+    }
+
+    /* =====================================================
+       SECTION STYLES
+    ===================================================== */
+    section {
+      padding: 120px 5%;
+      position: relative;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 70px;
+    }
+
+    .section-title h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2rem, 5vw, 4rem);
+      margin-bottom: 20px;
+      color: var(--green);
+      text-shadow: 0 0 25px rgba(0,255,159,0.5);
+    }
+
+    .section-title p {
+      max-width: 800px;
+      margin: auto;
+      color: var(--muted);
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    /* =====================================================
+       STATS SECTION
+    ===================================================== */
+    .stats {
+      max-width: var(--max-width);
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 30px;
+    }
+
+    .stat-box {
+      background: var(--card);
+      backdrop-filter: var(--blur);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 40px;
+      text-align: center;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+    }
+
+    .stat-box:hover {
+      transform: translateY(-10px);
+    }
+
+    .counter {
+      font-size: 3rem;
+      font-family: 'Orbitron', sans-serif;
+      color: var(--green);
+      margin-bottom: 10px;
+    }
+
+    /* =====================================================
+       MOVIE GRID
+    ===================================================== */
+    .movie-grid {
+      max-width: var(--max-width);
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+    }
+
+    .movie-card {
+      position: relative;
+      transform-style: preserve-3d;
+      perspective: 1200px;
+      transition: transform 0.2s ease;
+    }
+
+    .movie-card-inner {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      backdrop-filter: blur(16px);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: var(--transition);
+      box-shadow:
+        0 10px 35px rgba(0,0,0,0.5),
+        0 0 25px rgba(0,255,159,0.15);
+      position: relative;
+    }
+
+    .movie-card-inner:hover {
+      box-shadow:
+        0 20px 55px rgba(0,0,0,0.7),
+        0 0 35px rgba(0,255,159,0.4);
+    }
+
+    .movie-poster {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+
+    .movie-card:hover .movie-poster {
+      transform: scale(1.05);
+    }
+
+    .movie-content {
+      padding: 28px;
+    }
+
+    .movie-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.4rem;
+      color: var(--green);
+      margin-bottom: 16px;
+    }
+
+    .movie-meta {
+      display: grid;
+      gap: 8px;
+      color: var(--muted);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .stars {
+      color: var(--yellow);
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+    }
+
+    .summary {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .expand-btn {
+      width: 100%;
+    }
+
+    .details-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+    }
+
+    .details-panel.active {
+      max-height: 600px;
+      margin-top: 20px;
+    }
+
+    .details-panel ul {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      color: var(--muted);
+    }
+
+    /* =====================================================
+       TIMELINE SECTION
+    ===================================================== */
+    .timeline {
+      max-width: 1100px;
+      margin: auto;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      width: 4px;
+      top: 0;
+      bottom: 0;
+      background: linear-gradient(var(--green), var(--red));
+      box-shadow: 0 0 20px rgba(0,255,159,0.6);
+      transform: translateX(-50%);
+    }
+
+    .timeline-item {
+      width: 50%;
+      padding: 20px 40px;
+      position: relative;
+    }
+
+    .timeline-item:nth-child(odd) {
+      left: 0;
+      text-align: right;
+    }
+
+    .timeline-item:nth-child(even) {
+      left: 50%;
+    }
+
+    .timeline-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(12px);
+      padding: 30px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .timeline-card:hover {
+      transform: scale(1.03);
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      top: 50px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 20px var(--green);
+    }
+
+    .timeline-item:nth-child(odd)::before {
+      right: -10px;
+    }
+
+    .timeline-item:nth-child(even)::before {
+      left: -10px;
+    }
+
+    /* =====================================================
+       DINOSAUR SECTION
+    ===================================================== */
+    .dino-grid {
+      max-width: var(--max-width);
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .dino-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      min-height: 450px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      transition: var(--transition);
+    }
+
+    .dino-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 0 35px rgba(0,255,159,0.4);
+    }
+
+    .dino-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+      transition: transform 0.8s ease;
+    }
+
+    .dino-card:hover img {
+      transform: scale(1.1);
+    }
+
+    .dino-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.95), transparent 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 30px;
+    }
+
+    .dino-overlay h3 {
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 12px;
+      color: var(--green);
+    }
+
+    .dino-overlay p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* =====================================================
+       TRAILER MODAL
+    ===================================================== */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.4s ease;
+      z-index: 9999;
+      padding: 20px;
+    }
+
+    .modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      width: 90%;
+      max-width: 1000px;
+      position: relative;
+    }
+
+    .modal iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0 0 40px rgba(0,255,159,0.3);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: -60px;
+      right: 0;
+      font-size: 2rem;
+      cursor: pointer;
+      color: white;
+    }
+
+    /* =====================================================
+       AUDIO BUTTON
+    ===================================================== */
+    .music-toggle {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 999;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--green);
+      font-size: 1.4rem;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(0,255,159,0.4);
+      transition: var(--transition);
+    }
+
+    .music-toggle:hover {
+      transform: scale(1.1) rotate(10deg);
+    }
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+    footer {
+      text-align: center;
+      padding: 50px 20px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+    }
+
+    /* =====================================================
+       RESPONSIVE DESIGN
+    ===================================================== */
+    @media(max-width: 900px) {
+      .timeline::before {
+        left: 30px;
+      }
+
+      .timeline-item,
+      .timeline-item:nth-child(even),
+      .timeline-item:nth-child(odd) {
+        width: 100%;
+        left: 0;
+        text-align: left;
+        padding-left: 80px;
+      }
+
+      .timeline-item::before,
+      .timeline-item:nth-child(odd)::before,
+      .timeline-item:nth-child(even)::before {
+        left: 20px;
+      }
+
+      .nav-links {
+        justify-content: center;
+      }
+    }
+
+    @media(max-width: 600px) {
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .movie-poster {
+        height: 420px;
+      }
+
+      .music-toggle {
+        width: 60px;
+        height: 60px;
+        bottom: 20px;
+        right: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =====================================================
+       LOADER SCREEN
+  ====================================================== -->
+  <div class="loader" id="loader">
+    <div class="loader-logo"></div>
+    <h1>JURASSIC SYSTEM</h1>
+  </div>
+
+  <!-- PARTICLES -->
+  <div id="particles"></div>
+
+  <!-- SPOTLIGHT -->
+  <div class="spotlight" id="spotlight"></div>
+
+  <!-- =====================================================
+       NAVBAR
+  ====================================================== -->
+  <nav>
+    <div class="nav-inner">
+      <div class="logo">JURASSIC UNIVERSE</div>
+
+      <div class="nav-links">
+        <a href="#movies">Movies</a>
+        <a href="#timeline">Timeline</a>
+        <a href="#dinosaurs">Dinosaurs</a>
+        <a href="#stats">Stats</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- =====================================================
+       HERO SECTION
+  ====================================================== -->
+  <section class="hero">
+    <div class="hero-content" data-parallax="0.1">
+      <h1>Jurassic World</h1>
+
+      <p>
+        Experience the complete cinematic evolution of the Jurassic Park and Jurassic World franchise in a futuristic neon-powered interactive showcase.
+      </p>
+
+      <div class="hero-buttons">
+        <button class="glow-btn" onclick="scrollToSection('movies')">
+          Explore Movies
+        </button>
+
+        <button class="glow-btn" id="openTrailer">
+          Watch Trailer
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       STATS SECTION
+  ====================================================== -->
+  <section id="stats">
+    <div class="section-title">
+      <h2>Franchise Statistics</h2>
+      <p>
+        One of the most successful movie franchises in cinematic history.
+      </p>
+    </div>
+
+    <div class="stats">
+      <div class="stat-box">
+        <div class="counter" data-target="7">0</div>
+        <p>Movies</p>
+      </div>
+
+      <div class="stat-box">
+        <div class="counter" data-target="6200">0</div>
+        <p>Worldwide Revenue ($ Millions)</p>
+      </div>
+
+      <div class="stat-box">
+        <div class="counter" data-target="33">0</div>
+        <p>Years of Legacy</p>
+      </div>
+
+      <div class="stat-box">
+        <div class="counter" data-target="100">0</div>
+        <p>Iconic Dinosaurs</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       MOVIES SECTION
+  ====================================================== -->
+  <section id="movies">
+    <div class="section-title">
+      <h2>The Complete Saga</h2>
+      <p>
+        Explore every Jurassic Park and Jurassic World film with cinematic interactive cards.
+      </p>
+    </div>
+
+    <div class="movie-grid">
+
+      <!-- MOVIE CARD -->
+      <div class="movie-card">
+        <div class="movie-card-inner">
+          <img class="movie-poster" src="https://m.media-amazon.com/images/M/MV5BZmM4YzAxNzUtYTM3NS00ZjNhLTk5NmMtNjM4MjQxY2QzNjFmXkEyXkFqcGc@._V1_.jpg" alt="Jurassic Park">
+
+          <div class="movie-content">
+            <h3 class="movie-title">Jurassic Park (1993)</h3>
+
+            <div class="stars">★★★★★</div>
+
+            <div class="movie-meta">
+              <span><strong>Release:</strong> June 11, 1993</span>
+              <span><strong>Director:</strong> Steven Spielberg</span>
+              <span><strong>Producers:</strong> Kathleen Kennedy, Gerald Molen</span>
+              <span><strong>Main Actors:</strong> Sam Neill, Laura Dern, Jeff Goldblum</span>
+              <span><strong>Budget:</strong> $63M</span>
+              <span><strong>Revenue:</strong> $1.1B</span>
+            </div>
+
+            <p class="summary">
+              Scientists visit a dinosaur theme park where genetically engineered creatures break loose and threaten human survival.
+            </p>
+
+            <button class="glow-btn expand-btn">Expand Details</button>
+
+            <div class="details-panel">
+              <ul>
+                <li>Groundbreaking CGI revolutionized Hollywood forever.</li>
+                <li>Based on Michael Crichton's novel.</li>
+                <li>Features the iconic T-Rex breakout scene.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOVIE CARD -->
+      <div class="movie-card">
+        <div class="movie-card-inner">
+          <img class="movie-poster" src="https://m.media-amazon.com/images/M/MV5BMDcyODg0YzItM2Y2Zi00YzQ2LTg5NTUtYmE5MzkzNjUwZDNmXkEyXkFqcGc@._V1_.jpg" alt="Lost World">
+
+          <div class="movie-content">
+            <h3 class="movie-title">The Lost World (1997)</h3>
+
+            <div class="stars">★★★★☆</div>
+
+            <div class="movie-meta">
+              <span><strong>Release:</strong> May 23, 1997</span>
+              <span><strong>Director:</strong> Steven Spielberg</span>
+              <span><strong>Producers:</strong> Colin Wilson, Gerald Molen</span>
+              <span><strong>Main Actors:</strong> Jeff Goldblum, Julianne Moore</span>
+              <span><strong>Budget:</strong> $73M</span>
+              <span><strong>Revenue:</strong> $618M</span>
+            </div>
+
+            <p class="summary">
+              A rescue mission to Isla Sorna becomes chaos when dinosaurs are captured and brought to civilization.
+            </p>
+
+            <button class="glow-btn expand-btn">Expand Details</button>
+
+            <div class="details-panel">
+              <ul>
+                <li>Expanded dinosaur action and darker survival themes.</li>
+                <li>Famous San Diego T-Rex sequence.</li>
+                <li>Introduced Isla Sorna to the franchise.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOVIE CARD -->
+      <div class="movie-card">
+        <div class="movie-card-inner">
+          <img class="movie-poster" src="https://m.media-amazon.com/images/M/MV5BZGYxYjYwM2QtMmQxMy00MTE2LWExM2EtNzIzNmY5M2JkNzg5XkEyXkFqcGc@._V1_.jpg" alt="JP3">
+
+          <div class="movie-content">
+            <h3 class="movie-title">Jurassic Park III (2001)</h3>
+
+            <div class="stars">★★★☆☆</div>
+
+            <div class="movie-meta">
+              <span><strong>Release:</strong> July 18, 2001</span>
+              <span><strong>Director:</strong> Joe Johnston</span>
+              <span><strong>Producers:</strong> Kathleen Kennedy, Larry Franco</span>
+              <span><strong>Main Actors:</strong> Sam Neill, Tea Leoni</span>
+              <span><strong>Budget:</strong> $93M</span>
+              <span><strong>Revenue:</strong> $368M</span>
+            </div>
+
+            <p class="summary">
+              Dr. Alan Grant returns to dinosaur territory during a dangerous rescue operation.
+            </p>
+
+            <button class="glow-btn expand-btn">Expand Details</button>
+
+            <div class="details-panel">
+              <ul>
+                <li>Introduced the terrifying Spinosaurus.</li>
+                <li>Fast-paced survival-focused storytelling.</li>
+                <li>Expanded aerial dinosaur encounters.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOVIE CARD -->
+      <div class="movie-card">
+        <div class="movie-card-inner">
+          <img class="movie-poster" src="https://m.media-amazon.com/images/M/MV5BNzBhNzlkM2QtZmQ5Yi00MWQxLWJiMjQtM2M3ZjM4N2M4ZjZjXkEyXkFqcGc@._V1_.jpg" alt="Jurassic World">
+
+          <div class="movie-content">
+            <h3 class="movie-title">Jurassic World (2015)</h3>
+
+            <div class="stars">★★★★☆</div>
+
+            <div class="movie-meta">
+              <span><strong>Release:</strong> June 12, 2015</span>
+              <span><strong>Director:</strong> Colin Trevorrow</span>
+              <span><strong>Producers:</strong> Frank Marshall, Patrick Crowley</span>
+              <span><strong>Main Actors:</strong> Chris Pratt, Bryce Dallas Howard</span>
+              <span><strong>Budget:</strong> $150M</span>
+              <span><strong>Revenue:</strong> $1.67B</span>
+            </div>
+
+            <p class="summary">
+              A fully operational dinosaur theme park descends into disaster after a hybrid predator escapes.
+            </p>
+
+            <button class="glow-btn expand-btn">Expand Details</button>
+
+            <div class="details-panel">
+              <ul>
+                <li>Revived the franchise after 14 years.</li>
+                <li>Introduced Indominus Rex.</li>
+                <li>One of the highest-grossing films ever.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOVIE CARD -->
+      <div class="movie-card">
+        <div class="movie-card-inner">
+          <img class="movie-poster" src="https://m.media-amazon.com/images/M/MV5BODQ5ZDNjZjQtMTU5OS00NWI5LWI4NTEtZjA4N2QwNmM0MzM2XkEyXkFqcGc@._V1_.jpg" alt="Fallen Kingdom">
+
+          <div class="movie-content">
+            <h3 class="movie-title">Fallen Kingdom (2018)</h3>
+
+            <div class="stars">★★★☆☆</div>
+
+            <div class="movie-meta">
+              <span><strong>Release:</strong> June 22, 2018</span>
+              <span><strong>Director:</strong> J. A. Bayona</span>
+              <span><strong>Producers:</strong> Frank Marshall, Belén Atienza</span>
+              <span><strong>Main Actors:</strong> Chris Pratt, Bryce Dallas Howard</span>
+              <span><strong>Budget:</strong> $170M</span>
+              <span><strong>Revenue:</strong> $1.3B</span>
+            </div>
+
+            <p class="summary">
+              Dinosaurs face extinction once again as a volcanic eruption threatens Isla Nublar.
+            </p>
+
+            <button class="glow-btn expand-btn">Expand Details</button>
+
+            <div class="details-panel">
+              <ul>
+                <li>Darker gothic atmosphere and horror tone.</li>
+                <li>Introduced the Indoraptor hybrid.</li>
+                <li>Expanded the ethical questions of cloning.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOVIE CARD -->
+      <div class="movie-card">
+        <div class="movie-card-inner">
+          <img class="movie-poster" src="https://m.media-amazon.com/images/M/MV5BNDU5YTNjYTktNmY0Zi00OGY0LTliNDUtYjU0ZjhjM2E4Y2M1XkEyXkFqcGc@._V1_.jpg" alt="Dominion">
+
+          <div class="movie-content">
+            <h3 class="movie-title">Jurassic World Dominion (2022)</h3>
+
+            <div class="stars">★★★☆☆</div>
+
+            <div class="movie-meta">
+              <span><strong>Release:</strong> June 10, 2022</span>
+              <span><strong>Director:</strong> Colin Trevorrow</span>
+              <span><strong>Producers:</strong> Frank Marshall, Patrick Crowley</span>
+              <span><strong>Main Actors:</strong> Chris Pratt, Laura Dern, Sam Neill</span>
+              <span><strong>Budget:</strong> $265M</span>
+              <span><strong>Revenue:</strong> $1B</span>
+            </div>
+
+            <p class="summary">
+              Dinosaurs now coexist with humans across the globe in a fragile ecosystem.
+            </p>
+
+            <button class="glow-btn expand-btn">Expand Details</button>
+
+            <div class="details-panel">
+              <ul>
+                <li>Legacy cast returns together for the first time.</li>
+                <li>Global dinosaur-human conflict storyline.</li>
+                <li>Epic franchise crossover finale.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOVIE CARD -->
+      <div class="movie-card">
+        <div class="movie-card-inner">
+          <img class="movie-poster" src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?q=80&w=1200&auto=format&fit=crop" alt="Rebirth">
+
+          <div class="movie-content">
+            <h3 class="movie-title">Jurassic World Rebirth (2025)</h3>
+
+            <div class="stars">★★★★☆</div>
+
+            <div class="movie-meta">
+              <span><strong>Release:</strong> 2025</span>
+              <span><strong>Director:</strong> Gareth Edwards</span>
+              <span><strong>Producers:</strong> Frank Marshall</span>
+              <span><strong>Main Actors:</strong> Scarlett Johansson, Jonathan Bailey</span>
+              <span><strong>Budget:</strong> TBA</span>
+              <span><strong>Revenue:</strong> Upcoming</span>
+            </div>
+
+            <p class="summary">
+              A new generation enters a dangerous prehistoric era where science and survival collide.
+            </p>
+
+            <button class="glow-btn expand-btn">Expand Details</button>
+
+            <div class="details-panel">
+              <ul>
+                <li>New reboot-style continuation.</li>
+                <li>Directed by Gareth Edwards.</li>
+                <li>Modern sci-fi cinematic tone.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================
+       TIMELINE SECTION
+  ====================================================== -->
+  <section id="timeline">
+    <div class="section-title">
+      <h2>Jurassic Timeline</h2>
+      <p>
+        Follow the evolution of the Jurassic cinematic universe through decades of dinosaur chaos.
+      </p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <h3>1993</h3>
+          <p>Jurassic Park revolutionizes CGI filmmaking forever.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <h3>1997</h3>
+          <p>The Lost World expands the franchise into darker territory.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <h3>2001</h3>
+          <p>Jurassic Park III introduces Spinosaurus dominance.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <h3>2015</h3>
+          <p>Jurassic World becomes a global box office phenomenon.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <h3>2018</h3>
+          <p>Fallen Kingdom explores dinosaur extinction and cloning ethics.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <h3>2022</h3>
+          <p>Dominion merges legacy and modern characters together.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <h3>2025</h3>
+          <p>Rebirth begins a new cinematic era for the franchise.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       DINOSAURS SECTION
+  ====================================================== -->
+  <section id="dinosaurs">
+    <div class="section-title">
+      <h2>Legendary Dinosaurs</h2>
+      <p>
+        Meet the iconic prehistoric predators that defined the Jurassic universe.
+      </p>
+    </div>
+
+    <div class="dino-grid">
+
+      <div class="dino-card">
+        <img src="https://images.unsplash.com/photo-1561731216-c3a4d99437d5?q=80&w=1200&auto=format&fit=crop" alt="T-Rex">
+
+        <div class="dino-overlay">
+          <h3>Tyrannosaurus Rex</h3>
+          <p>
+            The king of the Jurassic franchise. Massive, terrifying, and iconic.
+          </p>
+        </div>
+      </div>
+
+      <div class="dino-card">
+        <img src="https://images.unsplash.com/photo-1520637836862-4d197d17c50a?q=80&w=1200&auto=format&fit=crop" alt="Velociraptor">
+
+        <div class="dino-overlay">
+          <h3>Velociraptor</h3>
+          <p>
+            Highly intelligent predators known for coordinated hunting tactics.
+          </p>
+        </div>
+      </div>
+
+      <div class="dino-card">
+        <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1200&auto=format&fit=crop" alt="Indominus Rex">
+
+        <div class="dino-overlay">
+          <h3>Indominus Rex</h3>
+          <p>
+            A genetically engineered hybrid designed to become the ultimate apex predator.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+  <footer>
+    <p>
+      Jurassic Universe Experience • Futuristic Cinematic Web Design • Built with Pure HTML, CSS & JavaScript
+    </p>
+  </footer>
+
+  <!-- =====================================================
+       MUSIC TOGGLE
+  ====================================================== -->
+  <button class="music-toggle" id="musicToggle">♫</button>
+
+  <!-- AUDIO -->
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_b4d3c55f5d.mp3?filename=epic-cinematic-trailer-113481.mp3" type="audio/mp3">
+  </audio>
+
+  <!-- =====================================================
+       TRAILER MODAL
+  ====================================================== -->
+  <div class="modal" id="trailerModal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeModal">✕</span>
+
+      <iframe
+        src="https://www.youtube.com/embed/RFinNxS5KN4"
+        title="Jurassic Trailer"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
+  <script>
+
+    /* =====================================================
+       LOADER
+    ===================================================== */
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('hidden');
+      }, 2000);
+    });
+
+    /* =====================================================
+       SMOOTH SCROLL FUNCTION
+    ===================================================== */
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+
+    /* =====================================================
+       PARTICLES GENERATOR
+    ===================================================== */
+    const particles = document.getElementById('particles');
+
+    for (let i = 0; i < 60; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+
+      const size = Math.random() * 5 + 2;
+
+      particle.style.width = size + 'px';
+      particle.style.height = size + 'px';
+      particle.style.left = Math.random() * 100 + 'vw';
+      particle.style.animationDuration = Math.random() * 15 + 10 + 's';
+      particle.style.animationDelay = Math.random() * 5 + 's';
+
+      particles.appendChild(particle);
+    }
+
+    /* =====================================================
+       SPOTLIGHT CURSOR EFFECT
+    ===================================================== */
+    const spotlight = document.getElementById('spotlight');
+
+    document.addEventListener('mousemove', (e) => {
+      spotlight.style.left = e.clientX + 'px';
+      spotlight.style.top = e.clientY + 'px';
+    });
+
+    /* =====================================================
+       3D TILT EFFECT
+    ===================================================== */
+    const cards = document.querySelectorAll('.movie-card');
+
+    cards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * -10;
+        const rotateY = ((x - centerX) / centerX) * 10;
+
+        card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg)';
+      });
+    });
+
+    /* =====================================================
+       EXPAND / COLLAPSE DETAILS
+    ===================================================== */
+    const expandButtons = document.querySelectorAll('.expand-btn');
+
+    expandButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const panel = button.nextElementSibling;
+        panel.classList.toggle('active');
+
+        button.textContent = panel.classList.contains('active')
+          ? 'Hide Details'
+          : 'Expand Details';
+      });
+    });
+
+    /* =====================================================
+       TRAILER MODAL
+    ===================================================== */
+    const modal = document.getElementById('trailerModal');
+
+    document.getElementById('openTrailer').addEventListener('click', () => {
+      modal.classList.add('active');
+    });
+
+    document.getElementById('closeModal').addEventListener('click', () => {
+      modal.classList.remove('active');
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+      }
+    });
+
+    /* =====================================================
+       MUSIC TOGGLE
+    ===================================================== */
+    const music = document.getElementById('bgMusic');
+    const musicToggle = document.getElementById('musicToggle');
+
+    let isPlaying = false;
+
+    musicToggle.addEventListener('click', () => {
+      if (!isPlaying) {
+        music.play();
+        musicToggle.innerHTML = '❚❚';
+      } else {
+        music.pause();
+        musicToggle.innerHTML = '♫';
+      }
+
+      isPlaying = !isPlaying;
+    });
+
+    /* =====================================================
+       COUNTER ANIMATION
+    ===================================================== */
+    const counters = document.querySelectorAll('.counter');
+
+    const animateCounters = () => {
+      counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const increment = target / 100;
+
+        const updateCounter = () => {
+          const current = +counter.innerText;
+
+          if (current < target) {
+            counter.innerText = Math.ceil(current + increment);
+            requestAnimationFrame(updateCounter);
+          } else {
+            counter.innerText = target;
+          }
+        };
+
+        updateCounter();
+      });
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounters();
+          observer.disconnect();
+        }
+      });
+    });
+
+    observer.observe(document.querySelector('#stats'));
+
+    /* =====================================================
+       PARALLAX EFFECT
+    ===================================================== */
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+
+      document.querySelectorAll('[data-parallax]').forEach(el => {
+        const speed = el.dataset.parallax;
+        el.style.transform = `translateY(${scrolled * speed}px)`;
+      });
+    });
+
+    /* =====================================================
+       CINEMATIC SECTION FADE-IN
+    ===================================================== */
+    const sections = document.querySelectorAll('section, .timeline-item, .movie-card, .dino-card');
+
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = 'translateY(0px)';
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    sections.forEach(section => {
+      section.style.opacity = 0;
+      section.style.transform = 'translateY(50px)';
+      section.style.transition = 'all 1s ease';
+      fadeObserver.observe(section);
+    });
+
+  </script>
+</body>
+</html>
